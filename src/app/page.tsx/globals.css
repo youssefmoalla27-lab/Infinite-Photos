@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink-950: #060608;
+  --ink-900: #0d0d12;
+  --ink-800: #12121a;
+  --ink-700: #1a1a26;
+  --ink-600: #22223a;
+  --ink-500: #2e2e4a;
+  --silver-50: #f8f8fc;
+  --silver-100: #ededf5;
+  --silver-200: #d4d4e8;
+  --silver-300: #b0b0cc;
+  --silver-400: #8888aa;
+  --gold-300: #e8d5a3;
+  --gold-400: #d4b96a;
+  --aurora-blue: #4a9eff;
+  --aurora-teal: #2dd4bf;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--ink-950);
+  color: var(--silver-100);
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink-900);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ink-500);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--silver-400);
+}
+
+/* Selection */
+::selection {
+  background: rgba(74, 158, 255, 0.3);
+  color: var(--silver-50);
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--aurora-blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Noise overlay texture */
+.noise-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Photo grid masonry */
+.photo-grid {
+  columns: 2;
+  column-gap: 8px;
+}
+
+@media (min-width: 640px) {
+  .photo-grid { columns: 3; }
+}
+@media (min-width: 1024px) {
+  .photo-grid { columns: 4; }
+}
+@media (min-width: 1280px) {
+  .photo-grid { columns: 5; }
+}
+
+.photo-grid-item {
+  break-inside: avoid;
+  margin-bottom: 8px;
+}
+
+/* Shimmer loading */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--ink-700) 0%,
+    var(--ink-600) 50%,
+    var(--ink-700) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+/* Glass card */
+.glass {
+  background: rgba(26, 26, 38, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(46, 46, 74, 0.8);
+}
+
+/* Button base */
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 
+         bg-aurora-blue text-ink-950 font-semibold rounded-xl
+         hover:bg-blue-400 active:scale-95
+         transition-all duration-200
+         disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3
+         bg-ink-700 text-silver-100 font-medium rounded-xl border border-ink-500
+         hover:bg-ink-600 hover:border-ink-400 active:scale-95
+         transition-all duration-200
+         disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2
+         text-silver-300 font-medium rounded-lg
+         hover:bg-ink-700 hover:text-silver-100 active:scale-95
+         transition-all duration-200;
+}
+
+.btn-danger {
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3
+         bg-red-500/10 text-red-400 font-medium rounded-xl border border-red-500/30
+         hover:bg-red-500/20 hover:border-red-500/50 active:scale-95
+         transition-all duration-200;
+}
+
+/* Input base */
+.input-field {
+  @apply w-full px-4 py-3 rounded-xl bg-ink-800 border border-ink-500
+         text-silver-100 placeholder:text-silver-400
+         focus:outline-none focus:border-aurora-blue focus:ring-1 focus:ring-aurora-blue/30
+         transition-all duration-200;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--gold-300) 0%, var(--aurora-blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Status badge */
+.badge-active {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
+         bg-emerald-500/10 text-emerald-400 border border-emerald-500/20;
+}
+.badge-pending {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
+         bg-amber-500/10 text-amber-400 border border-amber-500/20;
+}
+.badge-suspended {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
+         bg-orange-500/10 text-orange-400 border border-orange-500/20;
+}
+.badge-disabled {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
+         bg-red-500/10 text-red-400 border border-red-500/20;
+}
